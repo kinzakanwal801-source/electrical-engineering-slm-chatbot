@@ -1,0 +1,24 @@
+"""
+To test the Electrical Engineering Chatbot, open the COBNOX compiler and add the testing code to the compiler. 
+Compile and run the code in the COBNOX environment to check how the model responds to electrical engineering questions. 
+The testing process helps evaluate the model's responses to basic electrical concepts.
+"""
+
+use "sys"
+use "engine"
+
+ai = create_slm2_engine(512,64,128,0.002)
+load_model("electrical_sft.cbxm",ai.model.params)
+ai.tokenizer = tokenizer_load("electrical_tokenizer.json")
+
+print(" Model Loaded ")
+
+running = 1 
+while running == 1 do 
+    user = input("User: ")
+    if user == "stop" do 
+        running == 0
+    otherwise do 
+        if length(user) > 0 do 
+            reply = engine2_chat(ai,user)
+            print("\nBot: ",reply)
